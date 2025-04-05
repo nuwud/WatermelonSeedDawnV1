@@ -9,6 +9,7 @@
         "seed_model_url": {{ product.metafields.custom.seed_model_url | json }}
       }
     </script>
+
     <style>
       body {
         margin: 0;
@@ -18,43 +19,28 @@
       #app {
         width: 100vw;
         height: 100vh;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        background-color: black;
       }
     </style>
+
     <link rel="icon" href="{{ 'favicon.ico' | asset_url }}" type="image/x-icon">
   </head>
   <body>
     {% if request.host contains '127.0.0.1' or request.host contains 'localhost' %}
       <style>
-        /* Hide Dawn elements in dev mode */
-        header,
-        footer,
-        main,
-        .shopify-section,
-        .shopify-section-group,
+        /* Hide all Dawn elements during local dev only */
+        header, footer, main,
+        .shopify-section, .shopify-section-group,
         .shopify-editor__container,
-        .template-index,
-        .template-product,
-        .template-collection,
-        .template-page,
-        [class*='section'],
-        [class*='template'],
-        [class*='banner'],
-        [data-section-id],
-        [data-shopify-section-id],
-        [data-shopify-editor-section-id],
-        [data-template] {
+        .template-index, .template-product, .template-collection, .template-page,
+        [class*='section'], [class*='template'], [class*='banner'],
+        [data-section-id], [data-shopify-section-id], [data-shopify-editor-section-id], [data-template] {
           display: none !important;
-        }
-
-        body {
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-        }
-
-        #app {
-          width: 100vw;
-          height: 100vh;
         }
       </style>
     {% endif %}
