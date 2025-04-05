@@ -2,8 +2,16 @@ import type { Config } from 'tailwindcss'
 import remToPx from 'tailwindcss-rem-to-px';
 
 export default {
-  content: ['./*/*.{liquid,json,js}'],
+  content: [
+    './src/**/*.{vue,js,ts}',
+    './**/*.{liquid,json,js}'
+  ],
   theme: {
+    extend: {
+      spacing: {
+        fullscreen: '100vh',
+      }
+    }
   },
   plugins: [
     remToPx({
