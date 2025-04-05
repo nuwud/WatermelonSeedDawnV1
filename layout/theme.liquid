@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{ content_for_header }}
+    <script id="metafields" type="application/json">
+      {
+        "rotation_speed": {{ product.metafields.custom.rotation_speed | json }},
+        "bg_color": {{ product.metafields.custom.bg_color | json }},
+        "seed_model_url": {{ product.metafields.custom.seed_model_url | json }}
+      }
+    </script>
+  </head>
+  <body>
+    {{ content_for_layout }}
+    <div id="app"></div>
+    <script type="module" src="{{ 'app.js' | asset_url }}"></script>
+  </body>
+</html>

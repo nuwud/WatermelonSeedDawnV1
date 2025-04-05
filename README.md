@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🍉 WatermelonSeedV1 Starter Pack
 
 > A Vue 3 + TroisJS + Tailwind Vite-powered Shopify theme add-on  
@@ -106,6 +107,8 @@ This is your compiled Vue app injected into `theme.liquid`.
 - TroisJS + Vue 3 + Tailwind 4 + Vite
 - Inspired by your dream of AI-powered 3D stores
 
+=======
+>>>>>>> bd211712 (This one works. Simple cube displays, going to build from there.)
 # Dawn with Tailwind CSS
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&colorA=338fbb&colorB=1c1c1c&logoColor=ffffff)](https://github.com/odestry/.github/blob/main/CONTRIBUTING.md)
@@ -215,5 +218,8 @@ Odestry isn't just a community; it's a group of dedicated folks all aiming to bu
 Copyright (c) 2024-present Odestry. See [LICENSE](/LICENSE.md) for further details.
 
 Copyright (c) 2021-present Shopify Inc. See [LICENSE](/LICENSE.md) for further details.
+<<<<<<< HEAD
 
 Stay True Güüd 🍉
+=======
+>>>>>>> bd211712 (This one works. Simple cube displays, going to build from there.)
