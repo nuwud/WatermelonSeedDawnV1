@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3d63eee8 (� Synced project with correct GitHub remote)
 # 🍉 WatermelonSeedV1 Starter Pack
 
 > A Vue 3 + TroisJS + Tailwind Vite-powered Shopify theme add-on  
