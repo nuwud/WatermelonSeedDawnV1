@@ -1,66 +1,62 @@
-# 🍉 WatermelonSeedV1 Starter Pack
+# 🍉 WatermelonSeedDawnV1 Starter Kit
 
-> A Vue 3 + TroisJS + Tailwind Vite-powered Shopify theme add-on  
-> Built for `nx40dr-bu.myshopify.com` using the Dawn theme  
-> ✨ This is your base for injecting fully immersive 3D scenes with Shopify metafield integration.
+> Vue 3 + TroisJS + TailwindCSS 4 + Vite\
+> Integrated with Shopify’s Dawn Theme\
+> Injects immersive 3D modules and supports metafields for dynamic control.
 
 ---
 
-## 📁 Folder Overview
+## 📁 Folder Structure
 
-```bash
-WatermelonSeedV1_StarterPack/
-├── README.md                # You're here
-├── App.vue                  # Main app component
-├── SplashScene.vue         # 3D splash screen using TroisJS
-├── main.js                 # Vue app mount file
-├── app.js                  # Shopify-injected script
-├── theme.liquid            # Shopify layout file injection
-├── vite.config.ts          # Vite config with correct build/output
-├── tailwind.config.ts      # Tailwind setup
-├── postcss.config.js       # Fix for Tailwind CSS PostCSS issues
-├── package.json            # Dependencies
+```
+WatermelonSeedDawnV1/
+├── modules/                        # Modular 3D features go here
+│   └── SplashScene.vue            # First modular 3D scene (spinning cube)
+│   └── futureScene.vue            # (e.g. GLTF models, sky shaders, etc.)
+├── src/
+│   ├── App.vue                    # Main Vue app – renders <SplashScene />
+│   └── main.js                   # Mounts App.vue to #app
+├── assets/
+│   └── app.js                     # Compiled app injected into Shopify
+├── layout/
+│   └── theme.liquid               # Vue mount + metafield injection
+├── postcss.config.js             # Tailwind/PostCSS glue
+├── tailwind.config.ts            # TailwindCSS v4 setup
+├── vite.config.ts                # Vite build optimized for Shopify
+├── package.json                  # Project dependencies
+└── README.md                     # You’re here
 ```
 
 ---
 
-## 🧩 How To Use
+## 🚀 Setup Instructions
 
-### 1. 📂 Drop Files Into Shopify Theme
-
-Upload these files into your Shopify Dawn theme repo:
-
-| File | Target Path |
-|------|-------------|
-| `theme.liquid` | `layout/theme.liquid` |
-| `app.js` | `assets/app.js` (after build) |
-| `App.vue`, `SplashScene.vue`, `main.js` | `src/` (local dev only) |
-| `vite.config.ts`, `tailwind.config.ts`, `postcss.config.js`, `package.json` | root of your local project |
-
----
-
-## 🧪 Local Dev Workflow
+### 🔧 1. Install
 
 ```bash
-# First time setup
 npm install
+```
 
-# Build for Shopify
+### 🔨 2. Build
+
+```bash
 npm run build
 ```
 
-After building, Shopify will load:
-```
-/assets/app.js
-```
+This generates `/assets/app.js` — the compiled Vue+Trois 3D app.
 
-This is your compiled Vue app injected into `theme.liquid`.
+### ℹ️ 3. Push to Shopify
+
+```bash
+shopify theme push
+```
 
 ---
 
-## 🧠 How It Works
+## 💡 How It Works
 
-- `theme.liquid` contains:
+- `theme.liquid` injects:
+
 ```liquid
 <script id="metafields" type="application/json">
   {
@@ -73,35 +69,70 @@ This is your compiled Vue app injected into `theme.liquid`.
 <script type="module" src="/assets/app.js?v={{ 'now' | date: "%s" }}"></script>
 ```
 
-- `main.js` mounts the Vue app to `#app`
-- `App.vue` renders `<SplashScene />`
-- `SplashScene.vue` uses TroisJS to create a 3D cube, lit, centered, and background colored
-- Metafields are read and passed to props
+- Vue app mounts to `#app`, and loads your 3D scene from `modules/SplashScene.vue`.
+- Metafields (if set in Shopify) get pulled in via DOM bridge and passed as props.
 
 ---
 
-## 🔧 Shopify Notes
+## 🧹 Modular 3D Pattern
 
-- Only `assets/` is available to theme.js loads
-- Vue source code is NOT bundled in Shopify—just the compiled `app.js`
-- Use the `build` command before pushing to Shopify
+Want to add more scenes or features?
+
+Just drop new Vue components inside `/modules/` and import them in `App.vue`. For example:
+
+```vue
+<script setup>
+import SplashScene from './modules/SplashScene.vue'
+</script>
+
+<template>
+  <SplashScene />
+</template>
+```
+
+This keeps `App.vue` minimal and lets you test each feature independently.
 
 ---
 
-## 🚀 Next Features To Plug In
+## 📦 Shopify Theme Notes
 
-✅ Basic cube rendered  
-✅ Metafields loading  
-⬜ Add spinning animation  
-⬜ Add background shader  
-⬜ Replace cube with GLTF seed model  
-⬜ HUD for admin & in-scene controls  
-⬜ CrystalSeed loader/injector system
+- You can’t use `src/` files directly in Shopify – only the compiled output in `assets/`.
+- Always `npm run build` before pushing.
+- Keep metafields set in the product editor to see dynamic effects.
 
 ---
 
-## ❤️ Credits
+## ✅ Features Implemented
 
-- Built by [Patrick A. Wood - Nuwud Multimedia](https://nuwud.net)
-- TroisJS + Vue 3 + Tailwind 4 + Vite
-- Inspired by your dream of AI-powered 3D stores
+- ✅ Vue 3 + TroisJS scaffold
+- ✅ Shopify metafield bridge via `<script id="metafields">`
+- ✅ Working 3D canvas + lighting + cube
+- ✅ Modular file system via `modules/`
+- ✅ GitHub + Vite + Tailwind configured
+- ✅ Fullscreen, zero-margin rendering
+
+---
+
+## 🧪 Up Next: Future Features
+
+- ⏳ Replace cube with GLTF model (`seed_model_url`)
+- 🎨 Add iridescent background shader
+- 🛒 Add basic Shopify HUD controls (Add to cart, Variants, etc)
+- 🧠 HUD interface & AI Crystal Seed menu
+- ⚙️ Admin toggle interface for customizing scene
+- ⚙️ Size, rotation, animation metadata from metafields
+
+---
+
+## 🏆 Author & Credits
+
+- Built by [Patrick A. Wood – Nuwud Multimedia](https://nuwud.net)
+- GitHub Repo: [WatermelonSeedDawnV1](https://github.com/nuwud/WatermelonSeedDawnV1)
+- Technologies: Vue 3, TroisJS, TailwindCSS 4, Vite, Shopify Dawn
+
+---
+
+## 🍉 Final Notes
+
+- ❤️ Motto: **“Make it happen”** — from Patrick’s Dad
+- 🌱 This is the beginning of something huge. Stay modular, stay creative, and protect the seed.
