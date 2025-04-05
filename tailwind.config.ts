@@ -8,6 +8,6 @@ export default {
   plugins: [
     remToPx({
       baseFontSize: 16
-    }),
+    }) as any,
   ],
 } satisfies Config
