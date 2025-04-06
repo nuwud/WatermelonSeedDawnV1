@@ -4,9 +4,8 @@
     {{ content_for_header }}
     <script id="metafields" type="application/json">
       {
-        "rotation_speed": {{ product.metafields.custom.rotation_speed | json }},
-        "bg_color": {{ product.metafields.custom.bg_color | json }},
-        "seed_model_url": {{ product.metafields.custom.seed_model_url | json }}
+        "skyball_theme": {% if product and product.metafields.custom.skyball_theme %}{{ product.metafields.custom.skyball_theme | json }}{% else %}{{ shop.metafields.custom.skyball_theme | default: 'starry' | json }}{% endif %},
+        "button_color": {% if product and product.metafields.custom.button_color %}{{ product.metafields.custom.button_color | json }}{% else %}{{ shop.metafields.custom.button_color | default: '#66ccff' | json }}{% endif %}
       }
     </script>
 
@@ -47,6 +46,6 @@
 
     {{ content_for_layout }}
     <div id="app"></div>
-    <script type="module" src="{{ 'app.js' | asset_url }}"></script>
+    <script type="module" src="{{ 'app.js' | asset_url }}?v={{ 'now' | date: '%s' }}"></script>
   </body>
 </html>

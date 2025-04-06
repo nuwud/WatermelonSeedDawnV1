@@ -1,13 +1,21 @@
 <template>
-  <div>
-    <SplashScene />
+  <div id="app">
+    <SkyballScene />
   </div>
 </template>
 
 <script setup>
-  import SplashScene from './modules/SplashScene.vue'
+import SkyballScene from './modules/SkyballScene.vue'
+console.log('App mounted with SkyballScene component')
 </script>
 
-<style scoped>
-  /* Optional UI styles */
+<style>
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+}
 </style>
