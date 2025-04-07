@@ -6,8 +6,8 @@ export default class ButtonManager {
   constructor(scene, position, colorHex) {
     this.scene = scene
     this.position = {
-      x: position.x || 7,
-      y: position.y || -4,
+      x: position.x || 0,
+      y: position.y || 0,
       z: position.z || 0
     }
     
@@ -38,8 +38,8 @@ export default class ButtonManager {
   
   createButton() {
     // Create geometry and materials
-    const buttonGeometry = new THREE.BoxGeometry(1.2, 1.2, 1.2)
-    
+    const buttonGeometry = new THREE.TetrahedronGeometry(1.2)
+
     // Parse color to THREE.Color
     const primaryColor = new THREE.Color(this.primaryColorHex)
     const secondaryColor = new THREE.Color(this.primaryColorHex).multiplyScalar(0.5)

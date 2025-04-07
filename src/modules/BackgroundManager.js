@@ -44,26 +44,24 @@ export default class BackgroundManager {
     }
     
     starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3))
-    starsGeometry.setAttribute('size', new THREE.BufferAttribute(starsSizes, 1))
+    starsGeometry.setAttribute('aSize', new THREE.BufferAttribute(starsSizes, 1))
     
     // Create star material with custom shader for twinkling
     const starsMaterial = new THREE.ShaderMaterial({
       uniforms: {
-        time: { value: 0 },
-        size: { value: 2 }
+        uTime: { value: 0 }
       },
       vertexShader: `
-        uniform float time;
-        uniform float size;
-        attribute float size;
+        uniform float uTime;
+        attribute float aSize;
         varying float vSize;
         
         void main() {
-          vSize = size;
+          vSize = aSize;
           // Slight twinkling effect
-          float twinkle = sin(time + position.x * 10.0) * 0.5 + 0.5;
+          float twinkle = sin(uTime + position.x * 10.0) * 0.5 + 0.5;
           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = size * (1.0 + 0.5 * twinkle) * (300.0 / -mvPosition.z);
+          gl_PointSize = aSize * (1.0 + 0.5 * twinkle) * (300.0 / -mvPosition.z);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
@@ -163,7 +161,7 @@ export default class BackgroundManager {
   update(time) {
     // Update star shader uniforms
     if (this.stars && this.stars.material.uniforms) {
-      this.stars.material.uniforms.time.value = time
+      this.stars.material.uniforms.uTime.value = time
       this.stars.rotation.y = time * 0.01
     }
     

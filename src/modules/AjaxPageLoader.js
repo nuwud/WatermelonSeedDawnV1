@@ -53,7 +53,7 @@ export default class AjaxPageLoader {
   init() {
     // Check if the container exists
     if (!this.containerElement) {
-      console.error(`[AjaxPageLoader] Container element "${this.settings.container}" not found.`)
+      console.warn(`[AjaxPageLoader] Container element "${this.settings.container}" not found, skipping AJAX loader init.`)
       return
     }
 
@@ -127,7 +127,7 @@ export default class AjaxPageLoader {
   /**
    * Handle popstate event (browser back/forward)
    */
-  handlePopState(event) {
+  handlePopState() {
     const url = window.location.href
 
     // Don't reload the current page
