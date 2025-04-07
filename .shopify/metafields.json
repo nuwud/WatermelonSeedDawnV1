@@ -8,7 +8,48 @@
   "market": [],
   "order": [],
   "page": [],
-  "product": [],
+  "product": [
+    {
+      "key": "skyball_theme",
+      "namespace": "custom",
+      "name": "skyball_theme",
+      "description": "(Single line text): \"starry\", \"sunny\", or \"sunset\"",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "button_color_",
+      "namespace": "custom",
+      "name": "button_color ",
+      "description": " (Color): Default \"#66ccff\"",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "inner_glow_color_",
+      "namespace": "custom",
+      "name": "inner_glow_color ",
+      "description": "(Color): Default \"#99eeff\"",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "menu_title",
+      "namespace": "custom",
+      "name": "menu_title",
+      "description": "(Single line text): Default \"Shop\"",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
   "variant": [],
   "shop": []
 }

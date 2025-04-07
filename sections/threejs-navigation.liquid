@@ -1,0 +1,282 @@
+{% comment %}
+  ThreeJS Navigation Section
+  A 3D navigation system with raymarched cube button, smooth menu transitions, and seamless page loading.
+{% endcomment %}
+
+<div id="threejs-container" class="threejs-navigation">
+  <!-- This is the container where the 3D scene will be rendered -->
+</div>
+
+<div class="loading-indicator">
+  <div class="loading-orb"></div>
+</div>
+
+{% if section.settings.add_theme_script %}
+<script>
+  // Store theme settings as a global variable
+  window.threeJsSettings = {
+    enabled: {{ section.settings.enable_threejs_navigation }},
+    primaryColor: {{ section.settings.primary_color | json }},
+    backgroundColor: {{ section.settings.background_color | json }},
+    menuLayout: {{ section.settings.menu_layout | json }},
+    buttonPosition: {
+      x: {{ section.settings.button_position_x }},
+      y: {{ section.settings.button_position_y }},
+      z: {{ section.settings.button_position_z }}
+    },
+    transitionDuration: {{ section.settings.transition_duration }},
+    enableAjax: {{ section.settings.enable_ajax_loading }},
+    skyballTheme: {% if product and product.metafields.custom.skyball_theme %}{{ product.metafields.custom.skyball_theme | json }}{% else %}{{ shop.metafields.custom.skyball_theme | default: section.settings.skyball_theme | json }}{% endif %},
+    buttonColor: {% if product and product.metafields.custom.button_color %}{{ product.metafields.custom.button_color | json }}{% else %}{{ section.settings.primary_color | json }}{% endif %}
+  };
+</script>
+{% endif %}
+
+<style>
+  #threejs-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+  }
+  
+  #threejs-container canvas {
+    pointer-events: auto;
+  }
+  
+  .loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .loading-indicator.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .loading-orb {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, {{ section.settings.primary_color }} 0%, rgba(0,0,0,0) 70%);
+    animation: pulse 1.5s infinite ease-in-out;
+    box-shadow: 0 0 20px {{ section.settings.primary_color }};
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.8);
+      opacity: 0.7;
+    }
+  }
+  
+  /* Add 3D-friendly styles for main content */
+  .threejs-enabled #MainContent {
+    position: relative;
+    z-index: 20;
+    transition: opacity {{ section.settings.transition_duration }}s ease, 
+                transform {{ section.settings.transition_duration }}s ease;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 30px;
+  }
+  
+  /* Make the content container fit the theme */
+  {% if section.settings.enable_threejs_navigation %}
+  body {
+    background-color: #000000;
+  }
+  
+  .threejs-enabled #shopify-section-header,
+  .threejs-enabled #shopify-section-footer {
+    position: relative;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+  }
+  
+  .threejs-enabled .button,
+  .threejs-enabled .btn,
+  .threejs-enabled button[type="submit"] {
+    background: linear-gradient(135deg, {{ section.settings.primary_color }}, {{ section.settings.primary_color | color_darken: 30 }});
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px {{ section.settings.primary_color | color_modify: 'alpha', 0.3 }};
+    transition: all 0.3s ease;
+  }
+  
+  .threejs-enabled .button:hover,
+  .threejs-enabled .btn:hover,
+  .threejs-enabled button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px {{ section.settings.primary_color | color_modify: 'alpha', 0.5 }};
+  }
+  {% endif %}
+  
+  /* Media queries for responsive design */
+  @media screen and (max-width: 768px) {
+    .threejs-enabled #MainContent {
+      margin: 15px;
+      padding: 20px;
+    }
+  }
+</style>
+
+<!-- Include the Vue app for 3D navigation -->
+{% if section.settings.enable_threejs_navigation %}
+<script src="{{ 'app.js' | asset_url }}?v={{ 'now' | date: '%s' }}" defer></script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "3D Navigation",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_threejs_navigation",
+      "label": "Enable 3D Navigation",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "add_theme_script",
+      "label": "Add Theme Script",
+      "default": true,
+      "info": "Adds the necessary JavaScript for theme settings"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#66ccff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000814"
+    },
+    {
+      "type": "select",
+      "id": "skyball_theme",
+      "label": "Background Theme",
+      "options": [
+        {
+          "value": "starry",
+          "label": "Starry Night"
+        },
+        {
+          "value": "nebula",
+          "label": "Nebula"
+        },
+        {
+          "value": "sunset",
+          "label": "Cosmic Sunset"
+        }
+      ],
+      "default": "starry"
+    },
+    {
+      "type": "select",
+      "id": "menu_layout",
+      "label": "Menu Layout",
+      "options": [
+        {
+          "value": "fanCircular",
+          "label": "Fan Circular"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical Stack"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal Row"
+        },
+        {
+          "value": "grid",
+          "label": "Grid Layout"
+        }
+      ],
+      "default": "fanCircular"
+    },
+    {
+      "type": "header",
+      "content": "Button Position"
+    },
+    {
+      "type": "range",
+      "id": "button_position_x",
+      "min": -20,
+      "max": 20,
+      "step": 0.5,
+      "default": 7,
+      "label": "X Position"
+    },
+    {
+      "type": "range",
+      "id": "button_position_y",
+      "min": -10,
+      "max": 10,
+      "step": 0.5,
+      "default": -4,
+      "label": "Y Position"
+    },
+    {
+      "type": "range",
+      "id": "button_position_z",
+      "min": -20,
+      "max": 20,
+      "step": 0.5,
+      "default": 0,
+      "label": "Z Position"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ajax_loading",
+      "label": "Enable AJAX Page Loading",
+      "default": true,
+      "info": "Load pages without full refresh to maintain 3D environment"
+    },
+    {
+      "type": "range",
+      "id": "transition_duration",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.1,
+      "default": 0.8,
+      "label": "Transition Duration (seconds)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "3D Navigation",
+      "category": "Advanced"
+    }
+  ]
+}
+{% endschema %}
